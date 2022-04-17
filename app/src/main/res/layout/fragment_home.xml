@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.home.HomeFragment">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/b_create_archive"
+                android:layout_width="240dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="25dp"
+                app:cornerRadius="1000dp"
+                android:textAllCaps="false"
+                android:textSize="40dp"
+                android:fontFamily="@font/readexpro_light"
+                android:text="@string/create_archive"
+                android:layout_height="250dp"
+                android:layout_gravity="center_horizontal|top"/>
+
+            <EditText
+                android:id="@+id/etName"
+                style="@style/etBase"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="25dp"
+                android:fontFamily="@font/readexpro_regular"
+                android:gravity="center"
+                android:hint="@string/archive_name"
+                android:inputType="textPersonName"
+                android:textSize="20sp"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="35dp"
+                android:text="@string/select_extension"
+                android:fontFamily="@font/readexpro_regular"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal" />
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checkedButton="@id/radioButton_RAR"
+                android:foregroundGravity="center_horizontal"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radioButton_RAR"
+                    style="@style/Widget.AppCompat.CompoundButton.RadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="@string/rar"
+                    android:fontFamily="@font/readexpro_regular"
+                    android:textSize="30dp"
+                    android:layout_marginEnd="10dp"/>
+
+                <RadioButton
+                    android:id="@+id/radioButton_ZIP"
+                    style="@style/Widget.AppCompat.CompoundButton.RadioButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="@string/zip"
+                    android:fontFamily="@font/readexpro_regular"
+                    android:textSize="30dp" />
+            </RadioGroup>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
