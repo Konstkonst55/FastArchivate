@@ -8,8 +8,13 @@ import com.example.fastarchivate.MainActivity
 class SplashScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
+
+        firstRun()
+        startActivity(Intent(this, MainActivity::class.java))
         finish()
+    }
+
+    private fun firstRun() {
+        if (MyPreferences.Run(this).isFirstRun()) MyPreferences.Run(this).saveRun(false)
     }
 }

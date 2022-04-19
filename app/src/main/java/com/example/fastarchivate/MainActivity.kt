@@ -29,8 +29,6 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.appBarMain.toolbar)
 
-        FirstRun()
-
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_content_main)
@@ -43,12 +41,6 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-    }
-
-    private fun FirstRun(){
-        if(getSharedPreferences("RUN", Context.MODE_PRIVATE).getBoolean("FIRST_RUN", true)){
-            getSharedPreferences("RUN", Context.MODE_PRIVATE).edit().putBoolean("FIRST_RUN", false).apply()
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
