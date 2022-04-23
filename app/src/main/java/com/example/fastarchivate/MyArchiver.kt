@@ -3,10 +3,13 @@ package com.example.fastarchivate
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.opengl.Visibility
 import android.os.Environment
 import android.util.Log
 import android.view.View
+import android.widget.ProgressBar
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.delay
 import java.io.BufferedInputStream
 import java.io.BufferedOutputStream
 import java.io.FileInputStream
@@ -16,8 +19,8 @@ import java.util.zip.ZipOutputStream
 
 class MyArchiver {
     companion object{
-        fun createZipArchive(fileName: List<String>, newArchiveName: String, view: View) {
-            val outPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).path.toString() + "/$newArchiveName.zip"
+        fun createZipArchive(fileName: List<String>, newArchiveName: String, view: View, pb: ProgressBar, type: String) {
+            val outPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).path.toString() + "/$newArchiveName.$type"
             val files: List<String> = fileName
             val out = ZipOutputStream(BufferedOutputStream(FileOutputStream(outPath)))
             Log.i("ZIP", "out")
@@ -38,6 +41,7 @@ class MyArchiver {
                 origin.close()
             }
             out.close()
+            pb.visibility = View.GONE
         }
     }
 }
