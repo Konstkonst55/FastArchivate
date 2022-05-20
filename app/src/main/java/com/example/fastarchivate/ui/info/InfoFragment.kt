@@ -20,11 +20,11 @@ class InfoFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        slideshowViewModel =
-            ViewModelProvider(this).get(InfoViewModel::class.java)
+        slideshowViewModel = ViewModelProvider(this).get(InfoViewModel::class.java)
 
         _binding = FragmentInfoBinding.inflate(inflater, container, false)
 
+        //тут только тема устанавливается
         MyTheme.setTheme(requireContext())
 
         return binding.root

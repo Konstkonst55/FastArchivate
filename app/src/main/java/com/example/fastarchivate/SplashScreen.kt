@@ -14,7 +14,9 @@ class SplashScreen : AppCompatActivity() {
         finish()
     }
 
+    //хз не помню зачем я сохранял первый запуск
+    //ну я чекнул я нигде его не юзал так что можешь нажать во всех .kt файлах Ctrl+A -> Del
     private fun firstRun() {
-        if (MyPreferences.Run(this).isFirstRun()) MyPreferences.Run(this).saveRun(false)
+        if (MyPreferences(this).run) MyPreferences(this).run = false
     }
 }

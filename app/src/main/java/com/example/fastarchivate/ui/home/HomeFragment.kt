@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.fastarchivate.MyTheme
 import com.example.fastarchivate.databinding.FragmentHomeBinding
 import com.google.android.material.snackbar.Snackbar
 import androidx.core.app.ActivityCompat
@@ -15,14 +14,10 @@ import androidx.core.app.ActivityCompat
 import android.content.pm.PackageManager
 
 import android.net.Uri
-import android.provider.MediaStore
 import android.util.Log
-import android.widget.RadioGroup
 import androidx.activity.result.contract.ActivityResultContracts
-import com.example.fastarchivate.URIHelper
+import com.example.fastarchivate.*
 
-import com.example.fastarchivate.MyArchiver
-import com.example.fastarchivate.R
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
@@ -47,8 +42,9 @@ class HomeFragment : Fragment(), CoroutineScope {
 
         init()
 
+        //архивация
         binding.bCreateArchive.setOnClickListener {
-            if (binding.etName.text.toString() != ""){
+            if (binding.etName.text.toString().isNotEmpty()){
                 newArchiveName = binding.etName.text.toString()
                 getContent.launch("*/*")
             }else{
@@ -56,6 +52,7 @@ class HomeFragment : Fragment(), CoroutineScope {
             }
         }
 
+        //выбор расширения
         binding.rgType.setOnCheckedChangeListener{_, id: Int ->
             when(id){
                 R.id.radioButton_RAR -> type = "rar"
@@ -67,18 +64,26 @@ class HomeFragment : Fragment(), CoroutineScope {
         return binding.root
     }
 
+    //тут тема и чекаются разреешние на сохранение в хранилище
     private fun init() {
         MyTheme.setTheme(requireContext())
         verifyStoragePermissions()
     }
 
+    //получение списка выбранных файлов
     var getContent = registerForActivityResult(ActivityResultContracts.GetMultipleContents()) { uriList: List<Uri> ->
         binding.pbLoading.visibility = View.VISIBLE
-        launch { createArchive(uriList) }
-        Log.i("ZIP", "uri path: $uriList")
+        try{
+            launch { createArchiveAsync(uriList) }
+            Log.i("ZIP", "uri path: $uriList")
+        }catch (ex: Exception){
+            Log.i("ZIP", ex.toString())
+            binding.pbLoading.visibility = View.GONE
+        }
     }
 
-    private suspend fun createArchive(uriList: List<Uri>) = coroutineScope {
+    //тут архив создается
+    private suspend fun createArchiveAsync(uriList: List<Uri>) = coroutineScope {
         async {
             MyArchiver.createZipArchive(
                 fileName = getArrayUri(uriList),
@@ -90,20 +95,25 @@ class HomeFragment : Fragment(), CoroutineScope {
         }
     }
 
+    //получение листа со строками из листа с юри
     private fun getArrayUri(uriList: List<Uri>) : List<String> {
         val uriArr: ArrayList<String> = ArrayList()
-        uriList.forEach { uri ->
-            uriArr.add(URIHelper.getPath(requireContext(), uri).toString())
+        try {
+            uriList.forEach { uri ->
+                uriArr.add(URIHelper.getPath(requireContext(), uri).toString())
+            }
+
+        }catch (ex: Exception){
+            Log.i("ZIP", ex.toString())
+            binding.pbLoading.visibility = View.GONE
         }
         return uriArr
     }
 
+    //проверка разрешения
     private fun verifyStoragePermissions() {
-        val REQUEST_EXTERNAL_STORAGE = 1
-        val PERMISSIONS_STORAGE = arrayOf(
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
-        )
+
+
 
         val permission = ActivityCompat.checkSelfPermission(
             requireActivity(),
@@ -112,8 +122,8 @@ class HomeFragment : Fragment(), CoroutineScope {
         if (permission != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(
                 requireActivity(),
-                PERMISSIONS_STORAGE,
-                REQUEST_EXTERNAL_STORAGE
+                Constants.PERMISSIONS_STORAGE,
+                Constants.REQUEST_EXTERNAL_STORAGE
             )
         }
     }

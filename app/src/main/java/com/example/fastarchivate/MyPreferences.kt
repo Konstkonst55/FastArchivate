@@ -2,29 +2,25 @@ package com.example.fastarchivate
 
 import android.content.Context
 
-class MyPreferences {
+//в этом классе хранятся все настройки типо тема первый запуск и директория
+class MyPreferences(context: Context) {
+    private val prefs = context.getSharedPreferences(Constants.PREFS_NAME, Context.MODE_PRIVATE)
 
-    class Settings(context: Context){
-        private val settingsPreferences = context.getSharedPreferences("SETTINGS", Context.MODE_PRIVATE)
-
-        fun saveInt(keyName: String, value: Int) {
-            settingsPreferences.edit().putInt(keyName, value).apply()
+    var theme: Int
+        get() = prefs.getInt(Constants.THEME_KEY, R.id.rbAutoTheme)
+        set(id) {
+            prefs.edit().putInt(Constants.THEME_KEY, id).apply()
         }
 
-        fun getThemeId(): Int {
-            return settingsPreferences.getInt("THEME", R.id.rbAutoTheme)
-        }
-    }
-
-    class Run(context: Context){
-        private val settingsPreferences = context.getSharedPreferences("RUN", Context.MODE_PRIVATE)
-
-        fun saveRun(value: Boolean){
-            settingsPreferences.edit().putBoolean("FIRST_RUN", value).apply()
+    var run: Boolean
+        get() = prefs.getBoolean(Constants.FIRST_RUN_KEY, true)
+        set(value){
+            prefs.edit().putBoolean(Constants.FIRST_RUN_KEY, value).apply()
         }
 
-        fun isFirstRun() : Boolean{
-            return settingsPreferences.getBoolean("FIRST_RUN", true)
-        }
+    var directory: String?
+    get() = prefs.getString(Constants.DIRECTORY_KEY, "/storage/emulated/0/Download/")
+    set(value){
+        prefs.edit().putString(Constants.DIRECTORY_KEY, value).apply()
     }
 }

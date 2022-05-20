@@ -23,6 +23,7 @@ import java.lang.NumberFormatException
 
 
 class URIHelper {
+    //САМОМУ ИНТЕРЕСНО КАК ОНО РАБОТАЕТ ТАК ЧТО ЕСЛИ ПОЙМЕШЬ НАПИШЕШЬ
     companion object{
         fun getPath(context: Context, uri: Uri): String? {
             // DocumentProvider

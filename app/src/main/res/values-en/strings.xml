@@ -16,4 +16,7 @@
     <string name="menu_gallery">Informations</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="cd_open">Open</string>
+    <string name="title_directory">Directory</string>
+    <string name="auto_theme">Auto</string>
 </resources>

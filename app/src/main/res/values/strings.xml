@@ -23,6 +23,8 @@
     <string name="other_header">Другое</string>
     <string name="lorem_ipsum" translatable="false">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</string>
     <string name="header_app_name" translatable="false">#Fast_Archiver</string>
-    <string name="auto_theme" translatable="false">Auto</string>
+    <string name="auto_theme">Авто</string>
     <string name="menu_slideshow">Слайдшоу</string>
+    <string name="title_directory">Расположение</string>
+    <string name="cd_open">Открыть</string>
     `</resources>
